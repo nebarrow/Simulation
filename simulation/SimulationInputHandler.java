@@ -17,7 +17,7 @@ public class SimulationInputHandler {
     }
 
     public void processCommand() {
-        System.out.println("Enter 0 - for pause, 1 - for quit from simulation, 2 - for next iteration, 3 - for endless loop: ");
+        System.out.printf("Enter %s - for pause, %s - for quit from simulation, %s - for next iteration, %s - for endless loop: %n", COMMAND_FOR_PAUSE, COMMAND_FOR_STOP, COMMAND_FOR_CONTINUE, COMMAND_FOR_ENDLESS_LOOP);
         String command = scanner.nextLine();
         switch (command) {
             case COMMAND_FOR_PAUSE:
