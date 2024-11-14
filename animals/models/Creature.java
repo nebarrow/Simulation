@@ -15,7 +15,8 @@ public abstract class Creature extends Entity {
         this.HP = HP;
     }
 
-    public Coordinate move(WorldMap map, Coordinate currentCoordinate, BreadthFirstSearch targetSearcher) {
+    public Coordinate move(WorldMap map, Coordinate currentCoordinate) {
+        BreadthFirstSearch targetSearcher = new BreadthFirstSearch(map);
         List<Coordinate> path = searchTargetCoordinates(map, currentCoordinate, targetSearcher);
         if (path.isEmpty()) {
             return currentCoordinate;
