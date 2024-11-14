@@ -4,7 +4,6 @@ import animals.models.Creature;
 import animals.models.Entity;
 import map.entities.Coordinate;
 import map.entities.WorldMap;
-import objects.statics.Earth;
 import search.models.Search;
 
 import java.util.*;
@@ -89,8 +88,11 @@ public class BreadthFirstSearch implements Search {
         if (coordinate.getX() < 0 || coordinate.getY() < 0 || coordinate.getX() >= map.getWidth() || coordinate.getY() >= map.getHeight()) {
             return false;
         }
-        Entity entity = map.getEntityByCoordinates(coordinate);
+        if (map.isCellEmpty(coordinate)) {
+            return true;
+        }
 
-        return entity instanceof Earth || (creature.getTargetType().isAssignableFrom(entity.getClass()));
+        Entity entity = map.getEntityByCoordinates(coordinate);
+        return creature.getTargetType().isAssignableFrom(entity.getClass());
     }
 }
