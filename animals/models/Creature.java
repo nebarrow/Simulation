@@ -27,6 +27,24 @@ public abstract class Creature extends Entity {
         return nextCoordinate;
     }
 
+    private void interactWithTarget(WorldMap map, Coordinate currentCoordinate, Coordinate targetCoordinate) {
+        Entity entity = map.getEntityByCoordinates(targetCoordinate);
+        boolean hasInteracted = false;
+        if (isEntityTarget(entity) && isCanKillTarget(map, currentCoordinate, entity)) {
+            hasInteracted = true;
+        } else if (entity instanceof Earth) {
+            hasInteracted = true;
+        }
+        if (hasInteracted) {
+            map.setEntity(currentCoordinate, new Earth());
+            map.setEntity(targetCoordinate, this);
+        }
+    }
+
+    private List<Coordinate> searchTargetCoordinates(WorldMap map, Coordinate currentCoordinate, BreadthFirstSearch searcher) {
+        return searcher.shortestPathFinder(map, currentCoordinate, getTargetType());
+    }
+
     public int getSpeed() {
         return speed;
     }
@@ -46,22 +64,4 @@ public abstract class Creature extends Entity {
     public abstract Class<? extends Entity> getTargetType();
 
     public abstract boolean isEntityTarget(Entity entity);
-
-    private void interactWithTarget(WorldMap map, Coordinate currentCoordinate, Coordinate targetCoordinate) {
-        Entity entity = map.getEntityByCoordinates(targetCoordinate);
-        boolean hasInteracted = false;
-        if (isEntityTarget(entity) && isCanKillTarget(map, currentCoordinate, entity)) {
-            hasInteracted = true;
-        } else if (entity instanceof Earth) {
-            hasInteracted = true;
-        }
-        if (hasInteracted) {
-            map.setEntity(currentCoordinate, new Earth());
-            map.setEntity(targetCoordinate, this);
-        }
-    }
-
-    private List<Coordinate> searchTargetCoordinates(WorldMap map, Coordinate currentCoordinate, BreadthFirstSearch searcher) {
-        return searcher.shortestPathFinder(map, currentCoordinate, getTargetType());
-    }
 }
