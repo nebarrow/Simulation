@@ -80,7 +80,6 @@ public class Simulation {
         }
         if (!isPaused && isContinues && !endlessLoop) {
             nextTurn();
-            TimeUnit.SECONDS.sleep(2);
         } else if (!isContinues) {
             return;
         } else if (endlessLoop){
