@@ -11,6 +11,9 @@ import java.util.*;
 
 
 public class BreadthFirstSearch implements Search {
+    private final int[] X_DIR = {-1, -1, -1, 0, 0, 1, 1, 1};
+    private final int[] Y_DIR = {-1, 1, 0, -1, 1, -1, 1, 0};
+
     private final Queue<Coordinate> queue;
     private final Set<Coordinate> visited;
     private final Map<Coordinate, Coordinate> previous;
@@ -31,8 +34,8 @@ public class BreadthFirstSearch implements Search {
         visited.add(start);
         while (!queue.isEmpty()) {
             Coordinate current = queue.poll();
-            if (isTarget(current, target)) {
-                return constructedTargetPath(current);
+            if (isTargetReached(current, target)) {
+                return buildPathToTarget(current);
             }
             checkNeighbours(current, creature);
         }
@@ -42,22 +45,13 @@ public class BreadthFirstSearch implements Search {
     @Override
     public List<Coordinate> getNeighboursCoordinates(Coordinate coordinate, Creature creature) {
         List<Coordinate> neighbours = new ArrayList<>();
-        int x = coordinate.getX();
-        int y = coordinate.getY();
-        for (int i = x-1; i <= x+1; i++) {
-            for (int j = y-1; j <= y+1; j++) {
-                Coordinate neighbour = new Coordinate(i, j);
-                if (isValidNeighbourCoordinate(neighbour, creature) && !visited.contains(neighbour)) {
-                    neighbours.add(neighbour);
-                }
+        for (int i = 0; i < X_DIR.length; i++) {
+            Coordinate neighbourCoordinate = new Coordinate(coordinate.getX() + X_DIR[i], coordinate.getY() + Y_DIR[i]);
+            if (isValidNeighbourCoordinate(neighbourCoordinate, creature) && !visited.contains(neighbourCoordinate)) {
+                neighbours.add(neighbourCoordinate);
             }
         }
         return neighbours;
-    }
-
-    private boolean isTarget(Coordinate coordinate, Class<? extends Entity> targetClass) {
-        Entity entity = map.getEntityByCoordinates(coordinate);
-        return entity != null && targetClass.isAssignableFrom(entity.getClass());
     }
 
     private void checkNeighbours(Coordinate currentCoordinate, Creature creature) {
@@ -69,15 +63,20 @@ public class BreadthFirstSearch implements Search {
         }
     }
 
-    private List<Coordinate> constructedTargetPath(Coordinate targetCoordinate) {
+    private List<Coordinate> buildPathToTarget(Coordinate targetCoordinate) {
         List<Coordinate> path = new LinkedList<>();
         Coordinate current = targetCoordinate;
-        while (current != null) {
+        while (!(current == null)) {
             path.addFirst(current);
             current = previous.get(current);
         }
         path.removeFirst();
         return path;
+    }
+
+    private boolean isTargetReached(Coordinate coordinate, Class<? extends Entity> targetClass) {
+        Entity entity = map.getEntityByCoordinates(coordinate);
+        return entity != null && targetClass.isAssignableFrom(entity.getClass());
     }
 
     private void clearData() {
