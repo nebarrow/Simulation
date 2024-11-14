@@ -4,7 +4,7 @@ import animals.models.Entity;
 import render.models.Renderer;
 import map.entities.Coordinate;
 import map.entities.WorldMap;
-import objects.statics.Earth;
+import sprite.EntitySprite;
 import sprite.SpriteChoicer;
 
 import static sprite.EntitySprite.*;
@@ -22,12 +22,15 @@ public class WorldMapRenderer implements Renderer {
         for (int row = 0; row < map.getWidth(); ++row) {
             for (int column = 0; column < map.getHeight(); ++column) {
                 final Coordinate coordinate = new Coordinate(row, column);
+                String entitySprite;
                 if (map.isCellEmpty(coordinate)) {
-                    map.setEntity(coordinate, new Earth());
+                     entitySprite = EARTH.getSymbol();
+                } else {
+                    Entity entity = map.getEntityByCoordinates(coordinate);
+                    entitySprite = spriteChoicer.getSpriteForEntity(entity);
                 }
-                Entity entity = map.getEntityByCoordinates(coordinate);
-                String entitySprite = spriteChoicer.getSpriteForEntity(entity);
                 System.out.print(BACKGROUND.getSymbol() + entitySprite + RESET.getSymbol());
+
             }
             System.out.println();
         }
