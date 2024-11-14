@@ -4,7 +4,6 @@ import animals.models.Creature;
 import animals.models.Entity;
 import map.entities.Coordinate;
 import map.entities.WorldMap;
-import objects.statics.Earth;
 import search.entities.BreadthFirstSearch;
 
 public class Predator extends Creature {
@@ -25,7 +24,7 @@ public class Predator extends Creature {
         Herbivore herbivore = (Herbivore) target;
         herbivore.applyDamage(DAMAGE_POWER);
         if (herbivore.getHP() <= HEALTH_WHEN_CREATURE_DIE) {
-            map.setEntity(coordinate, new Earth());
+            map.removeEntity(coordinate);
             return true;
         }
         return false;
