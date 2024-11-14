@@ -5,7 +5,6 @@ import animals.models.Creature;
 import animals.models.Entity;
 import map.entities.Coordinate;
 import map.entities.WorldMap;
-import objects.statics.Earth;
 import search.entities.BreadthFirstSearch;
 
 import java.util.Set;
@@ -20,7 +19,7 @@ public class MoveAction extends Action {
         Set<Coordinate> creatureCoordinate = map.getCoordinatesByEntity(Creature.class);
         BreadthFirstSearch searcher = new BreadthFirstSearch(map);
         for (Coordinate coordinate : creatureCoordinate) {
-            if (!isEmptySquare(coordinate)) {
+            if (!map.isCellEmpty(coordinate)) {
                 Entity entity = map.getEntityByCoordinates(coordinate);
                 Creature creature = (Creature) entity;
                 int countOfMoves = creature.getSpeed();
@@ -29,10 +28,5 @@ public class MoveAction extends Action {
                 }
             }
         }
-    }
-
-    private boolean isEmptySquare(Coordinate coordinate) {
-        Entity entity = map.getEntityByCoordinates(coordinate);
-        return entity instanceof Earth;
     }
 }

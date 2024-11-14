@@ -2,7 +2,6 @@ package animals.models;
 
 import map.entities.Coordinate;
 import map.entities.WorldMap;
-import objects.statics.Earth;
 import search.entities.BreadthFirstSearch;
 
 import java.util.List;
@@ -28,17 +27,19 @@ public abstract class Creature extends Entity {
     }
 
     private void interactWithTarget(WorldMap map, Coordinate currentCoordinate, Coordinate targetCoordinate) {
+        if (map.isCellEmpty(targetCoordinate)) {
+            makeStep(map, currentCoordinate, targetCoordinate);
+            return;
+        }
         Entity entity = map.getEntityByCoordinates(targetCoordinate);
-        boolean hasInteracted = false;
-        if (isEntityTarget(entity) && isCanKillTarget(map, currentCoordinate, entity)) {
-            hasInteracted = true;
-        } else if (entity instanceof Earth) {
-            hasInteracted = true;
+        if (isEntityTarget(entity) && isCanKillTarget(map, targetCoordinate, entity)) {
+            makeStep(map, currentCoordinate, targetCoordinate);
         }
-        if (hasInteracted) {
-            map.setEntity(currentCoordinate, new Earth());
-            map.setEntity(targetCoordinate, this);
-        }
+    }
+
+    private void makeStep(WorldMap map, Coordinate currentCoordinate, Coordinate nextCoordinate) {
+        map.removeEntity(currentCoordinate);
+        map.setEntity(nextCoordinate, this);
     }
 
     private List<Coordinate> searchTargetCoordinates(WorldMap map, Coordinate currentCoordinate, BreadthFirstSearch searcher) {
