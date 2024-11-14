@@ -59,9 +59,9 @@ public abstract class Creature extends Entity {
         this.HP = HP;
     }
 
-    public abstract boolean isCanKillTarget(WorldMap map, Coordinate coordinate, Entity target);
-
     public abstract Class<? extends Entity> getTargetType();
 
-    public abstract boolean isEntityTarget(Entity entity);
+    protected abstract boolean isCanKillTarget(WorldMap map, Coordinate coordinate, Entity target);
+
+    protected abstract boolean isEntityTarget(Entity entity);
 }

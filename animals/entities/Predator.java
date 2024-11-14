@@ -14,7 +14,7 @@ public class Predator extends Creature {
     }
 
     @Override
-    public boolean isCanKillTarget(WorldMap map, Coordinate coordinate, Entity target) {
+    protected boolean isCanKillTarget(WorldMap map, Coordinate coordinate, Entity target) {
         Herbivore herbivore = (Herbivore) target;
         herbivore.applyDamage(DAMAGE_POWER);
         if (herbivore.getHP() <= HEALTH_WHEN_CREATURE_DIE) {
@@ -30,7 +30,7 @@ public class Predator extends Creature {
     }
 
     @Override
-    public boolean isEntityTarget(Entity entity) {
+    protected boolean isEntityTarget(Entity entity) {
         return entity instanceof Herbivore;
     }
 }

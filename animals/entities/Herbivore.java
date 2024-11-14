@@ -13,7 +13,7 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public boolean isCanKillTarget(WorldMap map, Coordinate coordinate, Entity target) {
+    protected boolean isCanKillTarget(WorldMap map, Coordinate coordinate, Entity target) {
         map.removeEntity(coordinate);
         return true;
     }
@@ -24,7 +24,7 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public boolean isEntityTarget(Entity entity) {
+    protected boolean isEntityTarget(Entity entity) {
         return entity instanceof NutritiousPlant;
     }
 
