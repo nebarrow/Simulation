@@ -69,8 +69,6 @@ public class WorldMap implements WorldMapBase {
         return coordinate;
     }
 
-
-
     public int getWidth() {
         return width;
     }
