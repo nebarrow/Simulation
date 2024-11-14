@@ -4,6 +4,7 @@ import animals.models.Entity;
 import map.entities.Coordinate;
 import map.entities.WorldMap;
 import objects.dynamics.NutritiousPlant;
+import objects.models.Object;
 import objects.statics.Rock;
 import objects.statics.Tree;
 
@@ -20,18 +21,17 @@ public class ObjectPopulator {
     }
 
     public void populate() {
+        Rock rock = new Rock();
+        NutritiousPlant plant = new NutritiousPlant();
+        Tree tree = new Tree();
         for (int currentCreature = 0; currentCreature < COUNT_OF_OBJECT; currentCreature++) {
-            addObjectOnMap(new Rock(), 1);
-            addObjectOnMap(new NutritiousPlant(), 1);
-            addObjectOnMap(new Tree(), 1);
+            addObjectOnMap(rock);
+            addObjectOnMap(plant);
+            addObjectOnMap(tree);
         }
     }
-    private void addObjectOnMap(Entity entity, int entityCount) {
-        Set<Coordinate> entityCoordinates = new HashSet<>();
-        while (entityCoordinates.size() < entityCount) {
-            Coordinate coordinate = map.getFreePosition();
-            entityCoordinates.add(coordinate);
-            map.setEntity(coordinate, entity);
-        }
+    private void addObjectOnMap(Entity entity) {
+        Coordinate coordinate = map.getFreePosition();
+        map.setEntity(coordinate, entity);
     }
 }

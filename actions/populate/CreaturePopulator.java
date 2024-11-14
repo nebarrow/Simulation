@@ -19,18 +19,17 @@ public class CreaturePopulator {
     }
 
     public void populate() {
+        Entity predator = new Predator(100, 1);
+        Entity herbivore = new Herbivore(6, 1);
+
         for (int currentCreature = 0; currentCreature < COUNT_OF_CREATURE; currentCreature++) {
-            addCreatureOnMap(new Predator(100, 1), 1);
-            addCreatureOnMap(new Herbivore(6, 1), 1);
+            addCreatureOnMap(predator);
+            addCreatureOnMap(herbivore);
         }
     }
 
-    private void addCreatureOnMap(Entity entity, int entityCount) {
-        Set<Coordinate> entityCoordinates = new HashSet<>();
-        while (entityCoordinates.size() < entityCount) {
-            Coordinate coordinate = map.getFreePosition();
-            entityCoordinates.add(coordinate);
-            map.setEntity(coordinate, entity);
-        }
+    private void addCreatureOnMap(Entity entity) {
+        Coordinate coordinate = map.getFreePosition();
+        map.setEntity(coordinate, entity);
     }
 }
