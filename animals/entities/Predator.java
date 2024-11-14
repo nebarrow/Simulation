@@ -4,7 +4,6 @@ import animals.models.Creature;
 import animals.models.Entity;
 import map.entities.Coordinate;
 import map.entities.WorldMap;
-import search.entities.BreadthFirstSearch;
 
 public class Predator extends Creature {
     private final double DAMAGE_POWER = 3;
@@ -12,11 +11,6 @@ public class Predator extends Creature {
 
     public Predator(double HP, int speed) {
         super(HP, speed);
-    }
-
-    @Override
-    public Coordinate makeMove(WorldMap map, Coordinate currentCoordinate, BreadthFirstSearch targetSearcher) {
-        return move(map, currentCoordinate, targetSearcher);
     }
 
     @Override

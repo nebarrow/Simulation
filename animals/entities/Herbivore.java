@@ -13,11 +13,6 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public Coordinate makeMove(WorldMap map, Coordinate currentCoordinate, BreadthFirstSearch targetSearcher) {
-        return move(map, currentCoordinate, targetSearcher);
-    }
-
-    @Override
     public boolean isCanKillTarget(WorldMap map, Coordinate coordinate, Entity target) {
         map.removeEntity(coordinate);
         return true;

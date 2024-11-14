@@ -58,8 +58,6 @@ public abstract class Creature extends Entity {
         this.HP = HP;
     }
 
-    public abstract Coordinate makeMove(WorldMap map, Coordinate currentCoordinate, BreadthFirstSearch targetSearcher);
-
     public abstract boolean isCanKillTarget(WorldMap map, Coordinate coordinate, Entity target);
 
     public abstract Class<? extends Entity> getTargetType();

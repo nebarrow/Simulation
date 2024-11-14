@@ -24,7 +24,7 @@ public class MoveAction extends Action {
                 Creature creature = (Creature) entity;
                 int countOfMoves = creature.getSpeed();
                 for (int numberOfMove = 0; numberOfMove < countOfMoves; numberOfMove++) {
-                    creature.makeMove(map, coordinate, searcher);
+                    creature.move(map, coordinate, searcher);
                 }
             }
         }
